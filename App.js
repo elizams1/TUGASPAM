@@ -14,60 +14,95 @@ import {
   TouchableOpacity,
   //
   ToastAndroid,
+  //
+  StatusBar,
+  View,
+  Button,
 } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const App = () => {
+function HomeScreen({navigation}) {
   const [keberangkatan, onChangeKeberangkatan] = React.useState(null);
   const [tujuan, onChangeTujuan] = React.useState(null);
   const [tanggal, onChangeTanggal] = React.useState(null);
   return (
-    <ScrollView style={styles.scrollView}>
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.header}>Mlaku.ID</Text>
-        <Text style={styles.headline}>Mlaku dulu, Dolanan kemudian</Text>
-        <SafeAreaView style={styles.main}>
-          <SafeAreaView style={styles.group}>
-            <Text style={styles.title}>Bandara Keberangkatan</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeKeberangkatan}
-              value={keberangkatan}
-              placeholder="Bandara Keberangkatan"
-            />
-          </SafeAreaView>
-          <SafeAreaView style={styles.group}>
-            <Text style={styles.title}>Bandara Tujuan</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeTujuan}
-              value={tujuan}
-              placeholder="Bandara Tujuan"
-            />
-          </SafeAreaView>
-          <SafeAreaView style={styles.group}>
-            <Text style={styles.title}>Tanggal Keberangkatan</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeTanggal}
-              value={tanggal}
-              placeholder="Tanggal Keberangkatan"
-            />
-          </SafeAreaView>
-          <SafeAreaView style={styles.group}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() =>
-                ToastAndroid.show('Mohon Tunggu Sebentar', ToastAndroid.SHORT)
-              }>
-              <Text style={styles.buttonText}>Cari</Text>
-            </TouchableOpacity>
+    <>
+      <StatusBar barStyle="light-content" backgroundColor="#283593" />
+      <ScrollView style={styles.scrollView}>
+        <SafeAreaView style={styles.container}>
+          <Text style={styles.header}>Mlaku.ID</Text>
+          <Text style={styles.headline}>Mlaku dulu, Dolanan kemudian</Text>
+          <SafeAreaView style={styles.main}>
+            <SafeAreaView style={styles.group}>
+              <Text style={styles.title}>Bandara Keberangkatan</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeKeberangkatan}
+                value={keberangkatan}
+                placeholder="Bandara Keberangkatan"
+              />
+            </SafeAreaView>
+            <SafeAreaView style={styles.group}>
+              <Text style={styles.title}>Bandara Tujuan</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeTujuan}
+                value={tujuan}
+                placeholder="Bandara Tujuan"
+              />
+            </SafeAreaView>
+            <SafeAreaView style={styles.group}>
+              <Text style={styles.title}>Tanggal Keberangkatan</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={onChangeTanggal}
+                value={tanggal}
+                placeholder="Tanggal Keberangkatan"
+              />
+            </SafeAreaView>
+            <SafeAreaView style={styles.group}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() =>
+                  navigation.navigate('Details')
+                }>
+                <Text style={styles.buttonText}>Cari</Text>
+              </TouchableOpacity>
+            </SafeAreaView>
           </SafeAreaView>
         </SafeAreaView>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
+function DetailsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+      <Button
+        title="Go to Details... again"
+        onPress={() => navigation.push('Details')}
+      />
+      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return(
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" >
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -124,6 +159,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal: 10,
     paddingVertical: 5,
+    elevation: 2,
   },
   buttonText: {
     color: '#283593',
