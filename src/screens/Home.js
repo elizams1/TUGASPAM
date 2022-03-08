@@ -20,10 +20,20 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const Home = ({navigation}) => {
-  const [keberangkatan, onChangeKeberangkatan] = React.useState(null);
-  const [tujuan, onChangeTujuan] = React.useState(null);
-  const [tanggal, onChangeTanggal] = React.useState(null);
+const Home = ({navigation}) => {  
+   const [text, handleText] = React.useState({ 
+    keberangkatan: '',
+    kedatangan: '',
+    tanggal: '',
+  });
+
+  const getText = (nameVar) => {
+    return (val) => {
+      handleText({ ...text, [nameVar]: val });
+      console.log(text);
+    }
+  }  
+  
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#283593" />
@@ -34,36 +44,47 @@ const Home = ({navigation}) => {
           <View style={styles.main}>
             <View style={styles.group}>
               <Text style={styles.title}>Bandara Keberangkatan</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeKeberangkatan}
-                value={keberangkatan}
-                placeholder="Bandara Keberangkatan"
-              />
+              <View style={styles.search}>
+                <Icon style={styles.icon} name="plane-departure" size={20} color='#283593'/>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={getText('keberangkatan')}
+                  value={text.keberangkatan}
+                  placeholder="Bandara Keberangkatan"
+                />
+              </View>              
             </View>
             <View style={styles.group}>
               <Text style={styles.title}>Bandara Tujuan</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeTujuan}
-                value={tujuan}
-                placeholder="Bandara Tujuan"
-              />
+              <View style={styles.search}>
+                <Icon style={styles.icon} name="plane-arrival" size={20} color='#283593' />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={getText('kedatangan')}
+                  value={text.kedatangan}
+                  placeholder="Bandara Tujuan"
+                />
+              </View>              
             </View>
             <View style={styles.group}>
               <Text style={styles.title}>Tanggal Keberangkatan</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={onChangeTanggal}
-                value={tanggal}
-                placeholder="Tanggal Keberangkatan"
-              />
+              <View style={styles.search}>
+                <Icon style={styles.iconcalendar} name="calendar-day" size={20} color='#283593' />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={getText('tanggal')}
+                  value={text.tanggal}
+                  placeholder="Tanggal Keberangkatan"
+                />
+              </View>              
             </View>
             <View style={styles.group}>
               <TouchableOpacity
                 style={styles.button}
                 onPress={() =>
-                  navigation.navigate('Details')
+                  navigation.navigate('Details', {
+                     text                   
+                  })                     
                 }>
                 <Text style={styles.buttonText}>Cari</Text>
               </TouchableOpacity>
@@ -99,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   main: {
-    margin: 40,
+    margin: 40,    
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingVertical: 20,
@@ -108,6 +129,15 @@ const styles = StyleSheet.create({
   },
   group: {
     marginBottom: 20,
+  },
+  search: {
+    marginLeft:15,    
+    flexDirection: 'row', 
+    justifyContent: 'center',   
+    alignItems: 'center',
+  },
+  iconcalendar: {
+    paddingRight: 5,
   },
   title: {
     marginLeft: 10,
@@ -125,6 +155,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     height: 40,
+    width: 250,
+    flex: 1,
   },
   button: {
     backgroundColor: '#ffee58',

@@ -11,18 +11,57 @@ import {
   //
   TextInput,
   //
-  TouchableOpacity,
-  //
-  ToastAndroid,
+  TouchableOpacity,  
   //
   StatusBar,
   View,
-  Button,
+  FlatList,  
+
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-function Details({ navigation }) {
+const JADWAL = [
+  {
+    jadwal_id: "01",
+    bandara_id_keberangkatan: "B01",
+    bandara_id_kedatangan: "B02",
+    maskapai_id: "F01",
+  },
+  {
+    jadwal_id: "02",
+    bandara_id_keberangkatan: "B01",
+    bandara_id_kedatangan: "B03",
+    maskapai_id: "F01",
+  },
+  {
+    jadwal_id: "03",
+    bandara_id_keberangkatan: "B01",
+    bandara_id_kedatangan: "B02",
+    maskapai_id: "F02",
+  },
+  {
+    jadwal_id: "04",
+    bandara_id_keberangkatan: "B01",
+    bandara_id_kedatangan: "B03",
+    maskapai_id: "F02",
+  },
+  {
+    jadwal_id: "05",
+    bandara_id_keberangkatan: "B01",
+    bandara_id_kedatangan: "B04",
+    maskapai_id: "F03",
+  },
+  {
+    jadwal_id: "06",
+    bandara_id_keberangkatan: "B01",
+    bandara_id_kedatangan: "B05",
+    maskapai_id: "F05",
+  },
+];
+
+const Details = ({ route, navigation }) => {  
+  
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#283593" />
@@ -41,68 +80,18 @@ function Details({ navigation }) {
           </View>
           <View style={styles.main}>
             <Text style={styles.search}>Hasil Pencarian</Text>            
-          </View>
+          </View>          
           <View style={styles.card}>
             <TouchableOpacity style={styles.theDetails}>
               <View style={styles.airport}>
-                <Text style={styles.text}>Bandara A</Text>
-                <Text style={styles.text}>Bandara B</Text>
+                <Text style={styles.text}>{ route.params.text.keberangkatan }</Text>
+                <Text style={styles.text}>{route.params.text.kedatangan}</Text>
               </View>
               <View style={styles.time}>
                 <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>10 Desember 2022</Text>
+                <Text style={styles.text}>{route.params.text.tanggal}</Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.theDetails}>
-              <View style={styles.airport}>
-                <Text style={styles.text}>Bandara A</Text>
-                <Text style={styles.text}>Bandara B</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>10 Desember 2022</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.theDetails}>
-              <View style={styles.airport}>
-                <Text style={styles.text}>Bandara A</Text>
-                <Text style={styles.text}>Bandara B</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>10 Desember 2022</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.theDetails}>
-              <View style={styles.airport}>
-                <Text style={styles.text}>Bandara A</Text>
-                <Text style={styles.text}>Bandara B</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>10 Desember 2022</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.theDetails}>
-              <View style={styles.airport}>
-                <Text style={styles.text}>Bandara A</Text>
-                <Text style={styles.text}>Bandara B</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>10 Desember 2022</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.theDetails}>
-              <View style={styles.airport}>
-                <Text style={styles.text}>Bandara A</Text>
-                <Text style={styles.text}>Bandara B</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>10 Desember 2022</Text>
-              </View>
-            </TouchableOpacity>
+            </TouchableOpacity>            
           </View>
           <Text style={styles.copyright}>Eliza M - 119140002</Text>
         </SafeAreaView>
@@ -175,4 +164,6 @@ const styles = StyleSheet.create({
     marginVertical: 50,
   },
 });
+
+
 export default Details;
