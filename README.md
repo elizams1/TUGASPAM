@@ -1,7 +1,9 @@
 # TUGASPAMMINGGU3 
+Eliza Maharani - 119140002
+
 ## Mlaku.ID (Mlaku Dulu, Dolanan Kemudian)
 Aplikasi Sederhana menggunakan React Native
-Eliza Maharani - 119140002
+
 
 ### 1 : Membuat Aplikasi dengan perintah
 `npx react-native init nama_project`
