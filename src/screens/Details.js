@@ -53,17 +53,17 @@ const Details = ({ route, navigation }) => {
               <TouchableOpacity style={styles.theDetails}>
                 <View style={styles.airport}>
                   <Text style={styles.text}>
-                    {BANDARA.find(subItem => subItem.bandara_id === item.bandara_id_keberangkatan).bandara_nama}
+                    {BANDARA.find(theItem => theItem.bandara_id === item.bandara_id_keberangkatan).bandara_nama}
                   </Text>
                   <Text style={styles.text}>
-                    {BANDARA.find(subItem => subItem.bandara_id === item.bandara_id_kedatangan).bandara_nama}
+                    {BANDARA.find(theItem => theItem.bandara_id === item.bandara_id_kedatangan).bandara_nama}
                   </Text>
                 </View>
                 <View style={styles.time}>
                   <View style={styles.maskapai}>
                     <Icon style={styles.iconPlane} name="plane" size={20} color='#fff' />
                     <Text style={styles.text}>
-                      {MASKAPAI.find(subItem => subItem.maskapai_id === item.maskapai_id).maskapai_nama}
+                      {MASKAPAI.find(theItem => theItem.maskapai_id === item.maskapai_id).maskapai_nama}
                     </Text>
                   </View>
                   <Text style={styles.text}>
