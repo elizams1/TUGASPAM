@@ -20,82 +20,68 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
-const JADWAL = [
-  {
-    jadwal_id: "01",
-    bandara_id_keberangkatan: "B01",
-    bandara_id_kedatangan: "B02",
-    maskapai_id: "F01",
-  },
-  {
-    jadwal_id: "02",
-    bandara_id_keberangkatan: "B01",
-    bandara_id_kedatangan: "B03",
-    maskapai_id: "F01",
-  },
-  {
-    jadwal_id: "03",
-    bandara_id_keberangkatan: "B01",
-    bandara_id_kedatangan: "B02",
-    maskapai_id: "F02",
-  },
-  {
-    jadwal_id: "04",
-    bandara_id_keberangkatan: "B01",
-    bandara_id_kedatangan: "B03",
-    maskapai_id: "F02",
-  },
-  {
-    jadwal_id: "05",
-    bandara_id_keberangkatan: "B01",
-    bandara_id_kedatangan: "B04",
-    maskapai_id: "F03",
-  },
-  {
-    jadwal_id: "06",
-    bandara_id_keberangkatan: "B01",
-    bandara_id_kedatangan: "B05",
-    maskapai_id: "F05",
-  },
-];
+import {JADWAL, MASKAPAI, BANDARA} from '../dataBase/dataBase.js';
 
 const Details = ({ route, navigation }) => {  
-  
+  const data = route.params.text;
+  const kedatanganId = BANDARA.find(item => item.bandara_nama === data.kedatangan).bandara_id;
+  const keberangkatanId = BANDARA.find(item => item.bandara_nama === data.keberangkatan).bandara_id;
+  const listAirplane = JADWAL.filter(item => 
+    item.bandara_id_keberangkatan === keberangkatanId && 
+    item.bandara_id_kedatangan === kedatanganId &&
+    item.jadwal_keberangkatan === data.tanggal);
+  console.log(listAirplane);
+
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#283593" />
-      <ScrollView style={styles.scrollView}>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.topNavigation}>
-            <View style={styles.back}>
-              <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
-                <Icon name="chevron-left" style={styles.buttonBack} size={20}/>
-              </TouchableOpacity>
-            </View>
-            <View>
-              <Text style={styles.header}>Mlaku.ID</Text>
-              <Text style={styles.headline}>Mlaku dulu, Dolanan kemudian</Text>
-            </View>
+      <StatusBar barStyle="light-content" backgroundColor="#283593" />  
+      <SafeAreaView style={styles.container}>
+        <View style={styles.topNavigation}>
+          <View style={styles.back}>
+            <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
+              <Icon name="chevron-left" style={styles.buttonBack} size={20}/>
+            </TouchableOpacity>
           </View>
-          <View style={styles.main}>
-            <Text style={styles.search}>Hasil Pencarian</Text>            
-          </View>          
-          <View style={styles.card}>
-            <TouchableOpacity style={styles.theDetails}>
-              <View style={styles.airport}>
-                <Text style={styles.text}>{ route.params.text.keberangkatan }</Text>
-                <Text style={styles.text}>{route.params.text.kedatangan}</Text>
-              </View>
-              <View style={styles.time}>
-                <Text style={styles.text}>Pesawat Ragnarok</Text>
-                <Text style={styles.text}>{route.params.text.tanggal}</Text>
-              </View>
-            </TouchableOpacity>            
+          <View>
+            <Text style={styles.header}>Mlaku.ID</Text>
+            <Text style={styles.headline}>Mlaku dulu, Dolanan kemudian</Text>
           </View>
-          <Text style={styles.copyright}>Eliza M - 119140002</Text>
-        </SafeAreaView>
-      </ScrollView>
+        </View>
+        <View style={styles.main}>
+          <Text style={styles.search}>Hasil Pencarian</Text>            
+        </View> 
+        <FlatList
+          data={listAirplane}
+          renderItem={({item}) => (              
+            <View style={styles.card}>
+              <TouchableOpacity style={styles.theDetails}>
+                <View style={styles.airport}>
+                  <Text style={styles.text}>
+                    {BANDARA.find(subItem => subItem.bandara_id === item.bandara_id_keberangkatan).bandara_nama}
+                  </Text>
+                  <Text style={styles.text}>
+                    {BANDARA.find(subItem => subItem.bandara_id === item.bandara_id_kedatangan).bandara_nama}
+                  </Text>
+                </View>
+                <View style={styles.time}>
+                  <Text style={styles.text}>
+                    {MASKAPAI.find(subItem => subItem.maskapai_id === item.maskapai_id).maskapai_nama}
+                  </Text>
+                  <Text style={styles.text}>
+                    {item.jadwal_keberangkatan}
+                  </Text>
+                </View>
+              </TouchableOpacity>            
+            </View>                           
+          )}
+          keyExtractor={item => item.jadwal_id}
+          >
+
+        </FlatList>
+
+        <Text style={styles.copyright}>Eliza M - 119140002</Text>
+      </SafeAreaView>
+      
     </>
   );
 }
@@ -161,7 +147,8 @@ const styles = StyleSheet.create({
   copyright: {
     color: '#283593',
     textAlign: 'center',
-    marginVertical: 50,
+    marginTop: 10,
+    marginBottom: 30,
   },
 });
 
