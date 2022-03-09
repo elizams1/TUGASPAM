@@ -5,11 +5,7 @@ import {
   //
   Text,
   //
-  SafeAreaView,
-  //
-  ScrollView,
-  //
-  TextInput,
+  SafeAreaView,  
   //
   TouchableOpacity,
   //
