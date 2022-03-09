@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   //
   StyleSheet,
@@ -11,35 +11,35 @@ import {
   //
   TextInput,
   //
-  TouchableOpacity,  
+  TouchableOpacity,
   //
   StatusBar,
   View,
-  FlatList,  
+  FlatList,
 
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {JADWAL, MASKAPAI, BANDARA} from '../dataBase/dataBase.js';
+import { JADWAL, MASKAPAI, BANDARA } from '../dataBase/dataBase.js';
 
-const Details = ({ route, navigation }) => {  
+const Details = ({ route, navigation }) => {
   const data = route.params.text;
   const kedatanganId = BANDARA.find(item => item.bandara_nama === data.kedatangan).bandara_id;
   const keberangkatanId = BANDARA.find(item => item.bandara_nama === data.keberangkatan).bandara_id;
-  const listAirplane = JADWAL.filter(item => 
-    item.bandara_id_keberangkatan === keberangkatanId && 
+  const listAirplane = JADWAL.filter(item =>
+    item.bandara_id_keberangkatan === keberangkatanId &&
     item.bandara_id_kedatangan === kedatanganId &&
     item.jadwal_keberangkatan === data.tanggal);
   console.log(listAirplane);
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#283593" />  
+      <StatusBar barStyle="light-content" backgroundColor="#283593" />
       <SafeAreaView style={styles.container}>
         <View style={styles.topNavigation}>
           <View style={styles.back}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
-              <Icon name="chevron-left" style={styles.buttonBack} size={20}/>
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+              <Icon name="chevron-left" style={styles.buttonBack} size={20} />
             </TouchableOpacity>
           </View>
           <View>
@@ -48,11 +48,11 @@ const Details = ({ route, navigation }) => {
           </View>
         </View>
         <View style={styles.main}>
-          <Text style={styles.search}>Hasil Pencarian</Text>            
-        </View> 
+          <Text style={styles.search}>Hasil Pencarian</Text>
+        </View>
         <FlatList
           data={listAirplane}
-          renderItem={({item}) => (              
+          renderItem={({ item }) => (
             <View style={styles.card}>
               <TouchableOpacity style={styles.theDetails}>
                 <View style={styles.airport}>
@@ -64,24 +64,27 @@ const Details = ({ route, navigation }) => {
                   </Text>
                 </View>
                 <View style={styles.time}>
-                  <Text style={styles.text}>
-                    {MASKAPAI.find(subItem => subItem.maskapai_id === item.maskapai_id).maskapai_nama}
-                  </Text>
+                  <View style={styles.maskapai}>
+                    <Icon style={styles.iconPlane} name="plane" size={20} color='#fff' />
+                    <Text style={styles.text}>
+                      {MASKAPAI.find(subItem => subItem.maskapai_id === item.maskapai_id).maskapai_nama}
+                    </Text>
+                  </View>
                   <Text style={styles.text}>
                     {item.jadwal_keberangkatan}
                   </Text>
                 </View>
-              </TouchableOpacity>            
-            </View>                           
+              </TouchableOpacity>
+            </View>
           )}
           keyExtractor={item => item.jadwal_id}
-          >
+        >
 
         </FlatList>
 
         <Text style={styles.copyright}>Eliza M - 119140002</Text>
       </SafeAreaView>
-      
+
     </>
   );
 }
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 25,
     borderBottomLeftRadius: 25,
   },
-  buttonBack:{
+  buttonBack: {
     color: '#FFFFFF',
     marginTop: 40,
     marginHorizontal: 40,
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     letterSpacing: 10,
-    textAlign: 'center',           
+    textAlign: 'center',
   },
   headline: {
     color: '#fff',
@@ -118,14 +121,14 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     fontSize: 18,
-    marginVertical: 20,    
+    marginVertical: 20,
   },
   card: {
     marginHorizontal: 30,
   },
   theDetails: {
-    backgroundColor: '#283593', 
-    padding: 10,
+    backgroundColor: '#283593',
+    padding: 20,
     borderRadius: 5,
     marginBottom: 20,
     elevation: 10,
@@ -133,13 +136,20 @@ const styles = StyleSheet.create({
   airport: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,    
+    marginBottom: 20,
   },
   time: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  text: { 
+  maskapai: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  iconPlane: {
+    marginRight: 10,
+  },
+  text: {
     color: '#fff',
     fontSize: 16,
     fontFamily: 'Helvetica',

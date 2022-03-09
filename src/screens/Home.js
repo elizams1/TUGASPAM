@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   main: {
-    margin: 40,    
+    margin: 40,  
+    marginTop: 50,  
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingVertical: 20,
